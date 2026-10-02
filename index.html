@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Formulario de inscripción al Concurso de Microlotes de la VII Feria de Café Especial y Agroempresarial de Guadalupe, Huila.">
+<title>Inscripción Microlotes Guadalupe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#f2f4f0; --surface:#ffffff; --field:#f7f8f5; --sunk:#e9ede6;
+  --ink:#16231a; --muted:#647266; --line:#dde3d9;
+  --forest:#173527; --forest-2:#24503a; --on-forest:#eef4ec;
+  --leaf:#2d6a47; --leaf-soft:#e3efe6;
+  --cherry:#b8322a; --cherry-soft:#fbe9e6;
+  --honey:#d4a24c;
+  --ok:#2d7a4b; --ok-soft:#e2f2e7;
+  --shadow:0 1px 2px rgba(22,35,26,.05),0 8px 24px -12px rgba(22,35,26,.18);
+  --display:"DM Serif Display", Georgia, "Times New Roman", serif;
+  --body:"Manrope", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1511; --surface:#18211b; --field:#1e2921; --sunk:#243027;
+  --ink:#e7eee5; --muted:#9daf9f; --line:#2c3a30;
+  --forest:#0c1c13; --forest-2:#163226; --on-forest:#e7f0e5;
+  --leaf:#7fc79a; --leaf-soft:#1f3a2a;
+  --cherry:#f08a7f; --cherry-soft:#3b1f1c;
+  --honey:#e2b866;
+  --ok:#86d3a0; --ok-soft:#1c3826;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1511; --surface:#18211b; --field:#1e2921; --sunk:#243027;
+  --ink:#e7eee5; --muted:#9daf9f; --line:#2c3a30;
+  --forest:#0c1c13; --forest-2:#163226; --on-forest:#e7f0e5;
+  --leaf:#7fc79a; --leaf-soft:#1f3a2a;
+  --cherry:#f08a7f; --cherry-soft:#3b1f1c;
+  --honey:#e2b866;
+  --ok:#86d3a0; --ok-soft:#1c3826;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+img{max-width:100%}
+
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 140% at 85% 0%,var(--forest-2) 0%,var(--forest) 60%);color:var(--on-forest)}
+.hero svg.topo{position:absolute;inset:0;width:100%;height:100%;opacity:.16;pointer-events:none}
+.hero-in{position:relative;max-width:900px;margin:0 auto;padding-inline:20px;padding-block:36px 30px;display:grid;gap:14px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.hero .eyebrow{color:var(--honey)}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,7vw,56px);line-height:1.02;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.hero h1 em{font-style:italic;color:var(--honey)}
+.hero p{margin:0;max-width:56ch;opacity:.85;font-size:15px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.meta span{font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.12);justify-self:start;margin-top:8px}
+.seg button{font:700 13.5px var(--body);border:0;border-radius:999px;padding:9px 16px;color:var(--on-forest);background:transparent;cursor:pointer;opacity:.75}
+.seg button[aria-selected="true"]{background:var(--on-forest);color:var(--forest);opacity:1}
+
+.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.steps-in{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:10px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.steps-in::-webkit-scrollbar{display:none}
+.steps a{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:600;font-size:13px;padding:6px 12px 6px 6px;border-radius:999px;transition:background .2s,color .2s}
+.steps a i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--sunk);color:var(--muted);transition:background .2s,color .2s}
+.steps a.on{background:var(--leaf-soft);color:var(--ink)}
+.steps a.on i{background:var(--leaf);color:var(--surface)}
+.steps a.full i{background:var(--ok);color:var(--surface)}
+
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:24px 140px}
+form{display:grid;gap:18px}
+
+fieldset{border:1px solid var(--line);border-radius:18px;background:var(--surface);margin:0;padding:0;min-width:0;box-shadow:var(--shadow)}
+legend{display:contents}
+.sec-h{display:flex;align-items:center;gap:14px;padding:20px 22px 4px}
+.sec-n{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--leaf-soft);color:var(--leaf);font-family:var(--display);font-size:20px}
+.sec-t{font-family:var(--display);font-size:22px;line-height:1.15}
+.sec-d{font-size:13px;color:var(--muted);margin-top:2px}
+.sec-b{padding:16px 22px 22px;display:grid;gap:18px}
+@media (max-width:520px){.sec-h{padding:18px 16px 2px}.sec-b{padding:14px 16px 18px}}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.full{grid-column:1/-1}
+
+.f{display:grid;gap:6px;min-width:0}
+.f > label,.lbl{font-size:13px;font-weight:700;color:var(--ink)}
+.req{color:var(--cherry);font-weight:800}
+.hint{font-size:12.5px;color:var(--muted)}
+input[type=text],input[type=tel],input[type=number],input[type=date],input[type=password],textarea{
+  width:100%;font:500 15px var(--body);color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;min-height:48px;transition:border-color .15s,box-shadow .15s,background .15s}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.7}
+input:hover,textarea:hover{border-color:color-mix(in srgb,var(--leaf) 35%,var(--line))}
+input:focus,textarea:focus{outline:none;border-color:var(--leaf);background:var(--surface);box-shadow:0 0 0 4px color-mix(in srgb,var(--leaf) 18%,transparent)}
+textarea{min-height:120px;resize:vertical;line-height:1.55}
+input[readonly]{background:var(--sunk);color:var(--muted);border-style:dashed}
+.unit{position:relative}
+.unit input{padding-right:84px}
+.unit span{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12.5px;font-weight:700;color:var(--muted);pointer-events:none}
+.f.bad input,.f.bad textarea{border-color:var(--cherry);box-shadow:0 0 0 4px color-mix(in srgb,var(--cherry) 12%,transparent)}
+.err{font-size:12.5px;font-weight:600;color:var(--cherry);display:none}.bad .err{display:block}
+button:focus-visible,a:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+
+.group{display:grid;gap:10px;padding:16px;border-radius:14px;background:var(--field);border:1.5px solid transparent}
+.group.bad{border-color:var(--cherry)}
+.group .lbl{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.chip span{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1.5px solid var(--line);border-radius:999px;font-size:14px;font-weight:600;background:var(--surface);cursor:pointer;transition:all .15s}
+.chip span::before{content:"";width:16px;height:16px;border-radius:50%;border:1.5px solid var(--muted);flex:none;transition:all .15s}
+.chip:hover span{border-color:var(--leaf)}
+.chip input:checked+span{border-color:var(--leaf);background:var(--leaf);color:var(--surface)}
+.chip input:checked+span::before{border-color:var(--surface);background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%232d6a47' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.chip input:focus-visible+span{outline:2px solid var(--leaf);outline-offset:2px}
+.groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.groups{grid-template-columns:1fr}}
+
+.decl{font-size:16px;line-height:1.9;margin:0;padding:16px 18px;border-radius:14px;background:var(--field)}
+.decl b{font-weight:700;padding:1px 8px;border-radius:6px;background:var(--leaf-soft);color:var(--ink)}
+.decl b.empty{background:var(--sunk);color:var(--muted);font-weight:500;font-style:italic}
+.checks{display:grid;gap:8px}
+.ck{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;font-size:14.5px;cursor:pointer;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);transition:border-color .15s,background .15s}
+.ck:hover{border-color:color-mix(in srgb,var(--leaf) 40%,var(--line))}
+.ck:has(input:checked){border-color:var(--leaf);background:var(--leaf-soft)}
+.ck input{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:0;border-radius:7px;border:1.5px solid var(--muted);background:var(--surface);cursor:pointer;display:grid;place-items:center;transition:all .15s}
+.ck input:checked{background:var(--leaf) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;border-color:var(--leaf)}
+.ck input:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+.ck b{color:var(--leaf);font-weight:800;margin-right:4px}
+.checks.bad .ck:not(:has(input:checked)){border-color:var(--cherry)}
+.declfoot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.ghost{font:700 13px var(--body);background:var(--surface);border:1.5px solid var(--leaf);border-radius:999px;padding:8px 14px;color:var(--leaf);cursor:pointer}
+.ghost:hover{background:var(--leaf-soft)}
+
+.sigs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:680px){.sigs{grid-template-columns:1fr}}
+.sigbox{display:grid;gap:14px;align-content:start;min-width:0;padding:16px;border-radius:14px;background:var(--field);border:1.5px solid transparent}
+.sigbox.bad{border-color:var(--cherry)}
+.sigbox h3{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pad{position:relative;border-radius:12px;background:var(--surface);height:160px;touch-action:none;border:1.5px solid var(--line)}
+.pad canvas{width:100%;height:100%;display:block;cursor:crosshair;border-radius:12px}
+.pad .ph{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--muted);pointer-events:none;font-weight:600}
+.pad .ln{position:absolute;left:18px;right:18px;bottom:34px;border-top:1.5px dashed var(--line);pointer-events:none}
+.pad .x{position:absolute;left:18px;bottom:38px;font-family:var(--display);font-size:20px;color:var(--muted);pointer-events:none}
+.mini{font:700 12px var(--body);background:none;border:0;color:var(--cherry);cursor:pointer;padding:4px 0}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:6;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.bar-in{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.prog{flex:1;min-width:180px;display:grid;gap:6px}
+.prog-t{font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:8px}
+.prog-t span{color:var(--muted);font-weight:600}
+.track{height:6px;border-radius:999px;background:var(--sunk);overflow:hidden}
+.track div{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--leaf),var(--honey));transition:width .35s ease}
+.btn{font:800 15px var(--body);border-radius:999px;padding:14px 26px;cursor:pointer;border:0;display:inline-flex;align-items:center;gap:10px;transition:transform .1s,filter .15s}
+.btn.pri{background:var(--cherry);color:#fff;box-shadow:0 8px 20px -8px color-mix(in srgb,var(--cherry) 70%,transparent)}
+.btn.pri:hover{filter:brightness(1.07)}
+.btn.pri:active{transform:translateY(1px)}
+.btn.sec{background:var(--leaf-soft);color:var(--leaf)}
+.btn:disabled{opacity:.6;cursor:wait}
+.banner{border-radius:14px;padding:14px 16px;font-size:14px;font-weight:500}
+.banner.warn{background:var(--cherry-soft);border:1px solid color-mix(in srgb,var(--cherry) 40%,transparent)}
+
+.done{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:40px 24px;display:grid;gap:14px;justify-items:center;text-align:center;box-shadow:var(--shadow)}
+.tick{width:76px;height:76px;border-radius:50%;background:var(--ok-soft);display:grid;place-items:center}
+.tick svg{width:40px;height:40px}
+.tick path{stroke:var(--ok);stroke-dasharray:30;stroke-dashoffset:30;animation:draw .6s .15s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.done h2{font-family:var(--display);font-weight:400;font-size:34px;margin:0}
+.radbox{display:grid;gap:4px;padding:14px 22px;border-radius:14px;background:var(--field);border:1.5px dashed var(--line)}
+.rad{font-family:var(--display);font-size:32px;letter-spacing:.04em;color:var(--leaf);font-variant-numeric:tabular-nums}
+.note{font-size:14px;color:var(--muted);max-width:52ch;margin:0}
+
+.login{max-width:420px;margin:8px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px 22px;display:grid;gap:14px;box-shadow:var(--shadow)}
+.login h2{font-family:var(--display);font-weight:400;font-size:26px;margin:0}
+.who{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:13px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow)}
+.stat .eyebrow{color:var(--muted);font-size:11px}
+.stat b{display:block;font-family:var(--display);font-weight:400;font-size:30px;line-height:1.1;margin-top:4px;font-variant-numeric:tabular-nums}
+.listhead{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:22px}
+.search{max-width:320px}
+.tblwrap{overflow-x:auto;margin-top:12px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:760px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;text-align:left;color:var(--muted);padding:12px 14px;white-space:nowrap;border-bottom:1px solid var(--line)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}
+tbody tr:first-child td{border-top:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr{cursor:pointer;transition:background .12s}tbody tr:hover{background:var(--field)}
+.code{font-weight:700;font-variant-numeric:tabular-nums;color:var(--leaf);white-space:nowrap}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--leaf-soft);margin:1px 3px 1px 0}
+.empty{padding:40px 16px;text-align:center;color:var(--muted)}
+dialog{border:0;border-radius:20px;background:var(--surface);color:var(--ink);padding:0;width:min(740px,calc(100vw - 32px));max-height:86vh;box-shadow:0 30px 80px -20px rgba(0,0,0,.45)}
+dialog::backdrop{background:rgba(10,20,14,.5);backdrop-filter:blur(3px)}
+.dlg-h{display:flex;justify-content:space-between;gap:12px;align-items:start;padding:20px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1}
+.dlg-h h2{font-family:var(--display);font-weight:400;margin:2px 0 0;font-size:26px}
+.dlg-h .eyebrow{color:var(--leaf)}
+.dlg-b{padding:18px 22px 24px;display:grid;gap:16px}
+.dl{display:grid;grid-template-columns:170px 1fr;gap:8px 14px;font-size:14px;margin:0}
+@media (max-width:520px){.dl{grid-template-columns:1fr;gap:2px}.dl dd{margin-bottom:8px}}
+.dl dt{color:var(--muted);font-weight:600}.dl dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.dlg-b h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 0;color:var(--leaf)}
+.dlg-b p{margin:0;white-space:pre-wrap}
+.sigimg{max-width:260px;background:#fff;border:1px solid var(--line);border-radius:10px}
+footer{margin-top:40px;font-size:12px;color:var(--muted);text-align:center;display:grid;gap:4px}
+footer b{font-weight:700;color:var(--ink)}
+.reveal{animation:up .5s ease both}
+@keyframes up{from{transform:translateY(8px)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}html{scroll-behavior:auto}.tick path{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="topo" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="#ffffff" stroke-width="1.2">
+      <path d="M-20 260 C120 200 220 240 340 190 S560 120 700 160 900 120 940 90"/>
+      <path d="M-20 290 C140 230 240 270 360 220 S580 150 720 190 900 150 940 120"/>
+      <path d="M-20 230 C110 170 210 210 320 160 S540 90 680 130 880 90 940 60"/>
+      <path d="M-20 200 C100 140 200 180 300 130 S520 60 660 100 860 60 940 30"/>
+      <path d="M560 40 C620 10 700 20 740 60 S800 120 760 150 640 150 600 110 520 70 560 40Z"/>
+      <path d="M590 55 C630 35 690 42 715 70 S750 115 725 132 650 132 625 105 565 75 590 55Z"/>
+      <path d="M625 72 C650 60 685 64 698 82 S712 108 698 116 660 116 645 100 610 85 625 72Z"/>
+      <path d="M-20 320 C160 260 260 300 380 250 S600 180 740 220 900 180 940 150"/>
+    </g>
+  </svg>
+  <div class="hero-in">
+    <div class="eyebrow">VII Feria de Café Especial y Agroempresarial</div>
+    <h1>Concurso de <em>Microlotes</em></h1>
+    <p>Formulario de inscripción del municipio de Guadalupe, Huila. Complete los cinco pasos y firme al final; recibirá un número de radicado.</p>
+    <div class="meta"><span>Guadalupe · Huila</span><span>Café especial</span><span>Inscripción 2026</span></div>
+    <div class="seg" role="tablist">
+      <button id="tabForm" role="tab" aria-selected="true">Nueva inscripción</button>
+      <button id="tabList" role="tab" aria-selected="false">Panel del comité <span id="tabCount"></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="steps" id="steps" aria-label="Secciones del formulario">
+  <div class="steps-in">
+    <a href="#s1" data-s="1"><i>1</i>Productor</a>
+    <a href="#s2" data-s="2"><i>2</i>Lote</a>
+    <a href="#s3" data-s="3"><i>3</i>Historia</a>
+    <a href="#s4" data-s="4"><i>4</i>Declaración</a>
+    <a href="#s5" data-s="5"><i>5</i>Firmas</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section id="viewForm">
+  <form id="f" novalidate>
+    <fieldset id="s1">
+      <legend><div class="sec-h"><span class="sec-n">1</span><div><div class="sec-t">Datos del productor</div><div class="sec-d">Quién participa y dónde está la finca.</div></div></div></legend>
+      <div class="sec-b grid">
+        <div class="f full"><label for="nombre">Nombre completo del productor <span class="req">*</span></label><input type="text" id="nombre" autocomplete="name" placeholder="Como aparece en la cédula" required><span class="err">Escriba el nombre completo.</span></div>
+        <div class="f"><label for="cedula">Cédula <span class="req">*</span></label><input type="text" id="cedula" inputmode="numeric" placeholder="Solo números" required><span class="err">Escriba el número de cédula (solo números).</span></div>
+        <div class="f"><label for="celular">Celular <span class="req">*</span></label><input type="tel" id="celular" inputmode="tel" placeholder="3xx xxx xxxx" required><span class="err">Escriba un celular de 10 dígitos.</span></div>
+        <div class="f"><label for="finca">Nombre de la finca <span class="req">*</span></label><input type="text" id="finca" required><span class="err">Escriba el nombre de la finca.</span></div>
+        <div class="f"><label for="sica">Código SICA</label><input type="text" id="sica" placeholder="Opcional"></div>
+        <div class="f"><label for="vereda">Vereda <span class="req">*</span></label><input type="text" id="vereda" required><span class="err">Escriba la vereda.</span></div>
+        <div class="f"><label for="municipio">Municipio / Departamento</label><input type="text" id="municipio" value="Guadalupe, Huila" readonly></div>
+        <div class="f"><label for="altura">Altura de la finca</label><div class="unit"><input type="number" id="altura" min="0" max="3500" inputmode="numeric" placeholder="1.650"><span>m s. n. m.</span></div></div>
+        <div class="f"><label for="area">Área en café</label><div class="unit"><input type="number" id="area" min="0" step="0.1" inputmode="decimal" placeholder="2,5"><span>hectáreas</span></div></div>
+      </div>
+    </fieldset>
+
+    <fieldset id="s2">
+      <legend><div class="sec-h"><span class="sec-n">2</span><div><div class="sec-t">Información del lote</div><div class="sec-d">El café que presenta al concurso.</div></div></div></legend>
+      <div class="sec-b">
+        <div class="grid">
+          <div class="f"><label for="kg">Tamaño del lote <span class="req">*</span></label><div class="unit"><input type="number" id="kg" min="0" step="0.5" inputmode="decimal" required><span>kg</span></div><span class="err">Indique el tamaño del lote en kg.</span></div>
+          <div class="f"><label for="variedad">Variedad(es) <span class="req">*</span></label><input type="text" id="variedad" placeholder="Ej.: Caturra, Pink Bourbon" required><span class="err">Escriba al menos una variedad.</span></div>
+        </div>
+        <div class="groups">
+          <div class="group f" id="g-proceso"><span class="lbl">Proceso <span class="req">*</span></span><div class="opts">
+            <label class="chip"><input type="checkbox" name="proceso" value="Lavado / Pergamino"><span>Lavado / Pergamino</span></label>
+            <label class="chip"><input type="checkbox" name="proceso" value="Honey / Semi-lavado"><span>Honey / Semi-lavado</span></label>
+            <label class="chip"><input type="checkbox" name="proceso" value="Natural"><span>Natural</span></label>
+          </div><span class="err">Marque al menos un proceso.</span></div>
+          <div class="group"><span class="lbl">Fermentación</span><div class="opts">
+            <label class="chip"><input type="checkbox" name="fermentacion" value="Abierta / Oxidación"><span>Abierta / Oxidación</span></label>
+            <label class="chip"><input type="checkbox" name="fermentacion" value="Cerrada / Anaeróbica"><span>Cerrada / Anaeróbica</span></label>
+            <label class="chip"><input type="checkbox" name="fermentacion" value="Combinada"><span>Combinada</span></label>
+          </div></div>
+          <div class="group"><span class="lbl">Secado</span><div class="opts">
+            <label class="chip"><input type="checkbox" name="secado" value="Marquesina"><span>Marquesina</span></label>
+            <label class="chip"><input type="checkbox" name="secado" value="Secador mecánico"><span>Secador mecánico</span></label>
+            <label class="chip"><input type="checkbox" name="secado" value="Patio / Plancha"><span>Patio / Plancha</span></label>
+          </div></div>
+          <div class="group"><span class="lbl">Otro</span>
+            <div class="opts"><label class="chip"><input type="checkbox" id="otroCk"><span>Especificar otro proceso</span></label></div>
+            <input type="text" id="otroTxt" placeholder="Describa el otro proceso" hidden>
+          </div>
+        </div>
+        <div class="f"><label for="beneficio">Descripción resumida del proceso de beneficio <span class="req">*</span></label>
+          <span class="hint">Desde la recolección hasta el secado: selección, despulpado, horas de fermentación, lavado, días de secado y humedad final.</span>
+          <textarea id="beneficio" required placeholder="Ej.: Recolección selectiva de cereza madura, flotación, 36 h de fermentación en tanque cerrado…"></textarea><span class="err">Describa brevemente el proceso de beneficio.</span></div>
+      </div>
+    </fieldset>
+
+    <fieldset id="s3">
+      <legend><div class="sec-h"><span class="sec-n">3</span><div><div class="sec-t">Historia del productor y la finca</div><div class="sec-d">Opcional, pero ayuda a presentar el lote a compradores.</div></div></div></legend>
+      <div class="sec-b">
+        <div class="f"><label for="historia">Cuéntenos la historia de la finca, del productor o de la familia cafetera, y por qué este lote es especial.</label>
+          <textarea id="historia" style="min-height:150px"></textarea></div>
+      </div>
+    </fieldset>
+
+    <fieldset id="s4">
+      <legend><div class="sec-h"><span class="sec-n">4</span><div><div class="sec-t">Declaración y autorizaciones</div><div class="sec-d">Las seis son obligatorias para participar.</div></div></div></legend>
+      <div class="sec-b">
+        <p class="decl">Yo, <b id="dNombre" class="empty">nombre del productor</b>, mayor de edad, identificado(a) con cédula de ciudadanía No. <b id="dCedula" class="empty">número</b>, declaro que:</p>
+        <div class="checks f" id="g-decl">
+          <label class="ck"><input type="checkbox" name="decl" value="1"><span><b>1</b>Conozco y acepto los parámetros, requisitos y términos establecidos para el concurso.</span></label>
+          <label class="ck"><input type="checkbox" name="decl" value="2"><span><b>2</b>La información suministrada sobre el origen, productor, finca y lote es real y verificable.</span></label>
+          <label class="ck"><input type="checkbox" name="decl" value="3"><span><b>3</b>No manipularé, sustituiré ni cambiaré total o parcialmente el producto presentado después de su inscripción.</span></label>
+          <label class="ck"><input type="checkbox" name="decl" value="4"><span><b>4</b>El lote presentado corresponde al café descrito en este formulario y podrá ser objeto de verificación por parte del comité organizador.</span></label>
+          <label class="ck"><input type="checkbox" name="decl" value="5"><span><b>5</b>Autorizo al comité organizador a utilizar los datos e información del lote participante para fines de evaluación, promoción y gestión comercial del evento.</span></label>
+          <label class="ck"><input type="checkbox" name="decl" value="6"><span><b>6</b>Autorizo, cuando corresponda, el envío de muestras y datos técnicos del lote a clientes o aliados comerciales vinculados al evento, con fines comerciales.</span></label>
+          <div class="declfoot"><span class="err">Para inscribirse hay que aceptar los seis puntos.</span><button type="button" class="ghost" id="allck">Aceptar los seis</button></div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset id="s5">
+      <legend><div class="sec-h"><span class="sec-n">5</span><div><div class="sec-t">Firmas</div><div class="sec-d">Firme con el dedo en el celular o con el mouse.</div></div></div></legend>
+      <div class="sec-b sigs">
+        <div class="sigbox f" id="g-firma">
+          <h3><span>Productor / participante <span class="req">*</span></span><button type="button" class="mini" data-clear="sigP">Borrar</button></h3>
+          <div class="pad"><canvas id="sigP"></canvas><div class="ln"></div><span class="x">×</span><span class="ph">Firme aquí</span></div>
+          <span class="err">Falta la firma del productor.</span>
+          <div class="f"><label for="pNombre">Nombre</label><input type="text" id="pNombre" readonly placeholder="Se completa solo"></div>
+          <div class="grid">
+            <div class="f"><label for="pCedula">C.C. No.</label><input type="text" id="pCedula" readonly placeholder="Se completa solo"></div>
+            <div class="f"><label for="fecha">Fecha de recepción</label><input type="date" id="fecha"></div>
+          </div>
+        </div>
+        <div class="sigbox">
+          <h3><span>Funcionario quien recibe</span><button type="button" class="mini" data-clear="sigF">Borrar</button></h3>
+          <div class="pad"><canvas id="sigF"></canvas><div class="ln"></div><span class="x">×</span><span class="ph">Firma del funcionario</span></div>
+          <div class="f"><label for="fNombre">Nombre</label><input type="text" id="fNombre"></div>
+          <div class="f"><label for="fCargo">Cargo</label><input type="text" id="fCargo"></div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div id="formErr" class="banner warn" hidden></div>
+  </form>
+  </section>
+
+  <section id="viewDone" hidden>
+    <div class="done reveal">
+      <div class="tick"><svg viewBox="0 0 40 40"><path d="M11 21l6 6 12-14" fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2>¡Lote inscrito!</h2>
+      <div class="radbox"><span class="eyebrow" style="color:var(--muted)">Número de radicado</span><span class="rad" id="radNum"></span></div>
+      <p class="note" id="doneTxt"></p>
+      <button class="btn sec" id="newBtn" type="button">Inscribir otro lote</button>
+    </div>
+  </section>
+
+  <section id="viewLogin" hidden>
+    <form class="login" id="loginForm" novalidate>
+      <span class="eyebrow" style="color:var(--leaf)">Solo comité organizador</span>
+      <h2>Ingresar al panel</h2>
+      <p class="note">Use el correo y la contraseña creados en Firebase.</p>
+      <div class="f"><label for="lEmail">Correo</label><input type="text" id="lEmail" inputmode="email" autocomplete="username"></div>
+      <div class="f"><label for="lPass">Contraseña</label><input type="password" id="lPass" autocomplete="current-password"></div>
+      <div id="loginErr" class="banner warn" hidden></div>
+      <button class="btn pri" type="submit" id="loginBtn" style="justify-content:center">Ingresar</button>
+    </form>
+  </section>
+
+  <section id="viewList" hidden>
+    <div class="who"><span id="whoTxt"></span><button class="ghost" type="button" id="logoutBtn">Cerrar sesión</button></div>
+    <div class="stats">
+      <div class="stat"><span class="eyebrow">Lotes inscritos</span><b id="stN">0</b></div>
+      <div class="stat"><span class="eyebrow">Kilos en concurso</span><b id="stKg">0</b></div>
+      <div class="stat"><span class="eyebrow">Veredas</span><b id="stV">0</b></div>
+    </div>
+    <div class="listhead">
+      <input type="text" id="q" class="search" placeholder="Buscar productor, finca, vereda…">
+      <button class="btn sec" id="csvBtn" type="button">Descargar para Excel</button>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Radicado</th><th>Productor</th><th>Finca · Vereda</th><th>Variedad</th><th>Proceso</th><th style="text-align:right">Lote (kg)</th><th style="text-align:right">Altura</th><th>Recibido</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="8" class="empty">Aún no hay inscripciones.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer><b>VII Feria de Café Especial y Agroempresarial de Guadalupe, Huila</b><span>Coocentral · Federación Nacional de Cafeteros de Colombia · Alcaldía de Guadalupe</span></footer>
+</main>
+
+<div class="bar" id="bar">
+  <div class="bar-in">
+    <div class="prog"><div class="prog-t">Progreso <span id="progTxt">0 de 11 obligatorios</span></div><div class="track"><div id="progBar"></div></div></div>
+    <button type="submit" form="f" class="btn pri" id="submitBtn">Enviar inscripción <span aria-hidden="true">→</span></button>
+  </div>
+</div>
+
+<dialog id="dlg"><div class="dlg-h"><div><div class="eyebrow" id="dRad"></div><h2 id="dTitle"></h2></div><button class="btn sec" id="dClose" type="button" style="padding:8px 16px">Cerrar</button></div><div class="dlg-b" id="dBody"></div></dialog>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, collection, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyClrdQTCq5-ZpCf3bmqan2ATBuuDSfbQ5c",
+  authDomain: "microlotesguadalupe.firebaseapp.com",
+  projectId: "microlotesguadalupe",
+  storageBucket: "microlotesguadalupe.firebasestorage.app",
+  messagingSenderId: "852719972660",
+  appId: "1:852719972660:web:e1ebcd637e992d30577561"
+};
+
+const app = initializeApp(firebaseConfig);
+const fdb = getFirestore(app);
+const auth = getAuth(app);
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+let all = [], unsub = null, pendingRad = null;
+const p2 = n => String(n).padStart(2,"0");
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; };
+$("#fecha").value = today();
+
+function mirror(){
+  const n = $("#nombre").value.trim(), c = $("#cedula").value.trim();
+  $("#dNombre").textContent = n || "nombre del productor"; $("#dNombre").classList.toggle("empty", !n);
+  $("#dCedula").textContent = c || "número"; $("#dCedula").classList.toggle("empty", !c);
+  $("#pNombre").value = n; $("#pCedula").value = c;
+}
+$("#nombre").addEventListener("input", mirror); $("#cedula").addEventListener("input", mirror);
+$("#otroCk").addEventListener("change", e => { $("#otroTxt").hidden = !e.target.checked; if (e.target.checked) $("#otroTxt").focus(); progress(); });
+$("#allck").addEventListener("click", () => { $$("[name=decl]").forEach(c => c.checked = true); progress(); if ($("#g-decl").classList.contains("bad")) check(); });
+
+// Firmas
+const pads = {};
+function setupPad(id){
+  const cv = document.getElementById(id), ctx = cv.getContext("2d");
+  const st = { drawn:false, down:false };
+  const ph = cv.parentElement.querySelector(".ph");
+  function size(){
+    const r = cv.getBoundingClientRect(); if (!r.width) return;
+    const old = st.drawn ? cv.toDataURL() : null;
+    cv.width = r.width * 2; cv.height = r.height * 2;
+    ctx.lineWidth = 4.5; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#16231a";
+    if (old){ const im = new Image(); im.onload = () => ctx.drawImage(im,0,0,cv.width,cv.height); im.src = old; }
+  }
+  const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX-r.left)*2,(e.clientY-r.top)*2]; };
+  cv.addEventListener("pointerdown", e => { st.down = true; cv.setPointerCapture(e.pointerId); const [x,y]=pos(e); ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+0.1,y+0.1); ctx.stroke(); if (!st.drawn){ st.drawn = true; ph.hidden = true; progress(); } });
+  cv.addEventListener("pointermove", e => { if(!st.down) return; const [x,y]=pos(e); ctx.lineTo(x,y); ctx.stroke(); });
+  ["pointerup","pointercancel","pointerleave"].forEach(t => cv.addEventListener(t, () => { st.down = false; }));
+  new ResizeObserver(size).observe(cv); size();
+  st.clear = () => { ctx.clearRect(0,0,cv.width,cv.height); st.drawn = false; ph.hidden = false; progress(); };
+  st.png = () => {
+    if (!st.drawn) return "";
+    const w = 480, h = Math.round(480 * cv.height / cv.width);
+    const t = document.createElement("canvas"); t.width = w; t.height = h;
+    const tc = t.getContext("2d"); tc.drawImage(cv,0,0,w,h);
+    const im = tc.getImageData(0,0,w,h), d = im.data;
+    for (let i=0;i<d.length;i+=4){ d[i]=22; d[i+1]=35; d[i+2]=26; }
+    tc.putImageData(im,0,0);
+    const o = document.createElement("canvas"); o.width = w; o.height = h;
+    const c = o.getContext("2d"); c.fillStyle = "#fff"; c.fillRect(0,0,w,h); c.drawImage(t,0,0);
+    return o.toDataURL("image/jpeg", 0.7);
+  };
+  pads[id] = st;
+}
+setupPad("sigP"); setupPad("sigF");
+$$("[data-clear]").forEach(b => b.addEventListener("click", () => pads[b.dataset.clear].clear()));
+
+// Validación y progreso
+const vals = n => $$(`[name=${n}]:checked`).map(c => c.value);
+const v = id => $("#"+id).value.trim();
+const tests = {
+  nombre: () => v("nombre").length >= 5,
+  cedula: () => /^\d{5,12}$/.test(v("cedula").replace(/[.\s]/g,"")),
+  celular: () => /^\d{10}$/.test(v("celular").replace(/\D/g,"")),
+  finca: () => v("finca").length > 1,
+  vereda: () => v("vereda").length > 1,
+  kg: () => Number(v("kg")) > 0,
+  variedad: () => v("variedad").length > 1,
+  proceso: () => vals("proceso").length > 0 || ($("#otroCk").checked && v("otroTxt").length > 0),
+  beneficio: () => v("beneficio").length > 10,
+  decl: () => vals("decl").length === 6,
+  firma: () => pads.sigP && pads.sigP.drawn,
+};
+const sectionOf = { nombre:1, cedula:1, celular:1, finca:1, vereda:1, kg:2, variedad:2, proceso:2, beneficio:2, decl:4, firma:5 };
+function progress(){
+  const keys = Object.keys(tests), ok = keys.filter(k => tests[k]());
+  $("#progTxt").textContent = `${ok.length} de ${keys.length} obligatorios`;
+  $("#progBar").style.width = (ok.length / keys.length * 100) + "%";
+  [1,2,4,5].forEach(s => { const ks = keys.filter(k => sectionOf[k] === s); $(`.steps a[data-s="${s}"]`).classList.toggle("full", ks.every(k => tests[k]())); });
+  $(`.steps a[data-s="3"]`).classList.toggle("full", v("historia").length > 10);
+}
+function check(){
+  let firstBad = null;
+  const mark = (el, ok) => { el.classList.toggle("bad", !ok); if (!ok && !firstBad) firstBad = el; };
+  ["nombre","cedula","celular","finca","vereda","kg","variedad"].forEach(k => mark($("#"+k).closest(".f"), tests[k]()));
+  mark($("#g-proceso"), tests.proceso());
+  mark($("#beneficio").closest(".f"), tests.beneficio());
+  mark($("#g-decl"), tests.decl());
+  mark($("#g-firma"), tests.firma());
+  return firstBad;
+}
+$("#f").addEventListener("input", e => { progress(); if (e.target.closest(".bad")) check(); });
+$("#f").addEventListener("change", progress);
+progress();
+
+// Paso activo al desplazarse
+const links = $$(".steps a");
+const io = new IntersectionObserver(es => {
+  es.forEach(en => { if (en.isIntersecting){ links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#"+en.target.id)); } });
+}, { rootMargin: "-35% 0px -55% 0px" });
+["s1","s2","s3","s4","s5"].forEach(id => io.observe(document.getElementById(id)));
+links[0].classList.add("on");
+
+function radicado(){
+  const d = new Date();
+  return `MIC-${p2(d.getMonth()+1)}${p2(d.getDate())}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
+}
+
+// Enviar a Firestore
+$("#f").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("#formErr").hidden = true;
+  const bad = check();
+  if (bad){ bad.scrollIntoView({behavior:"smooth", block:"center"}); const i = bad.querySelector("input:not([readonly]):not([type=checkbox]),textarea"); if (i) i.focus({preventScroll:true}); return; }
+  const btn = $("#submitBtn"); btn.disabled = true; btn.textContent = "Enviando…";
+  const rad = pendingRad || (pendingRad = radicado());
+  const reg = {
+    radicado: rad, creado: new Date().toISOString(),
+    productor: { nombre: v("nombre"), cedula: v("cedula").replace(/[.\s]/g,""), celular: v("celular").replace(/\D/g,""),
+      finca: v("finca"), sica: v("sica"), vereda: v("vereda"), municipio: "Guadalupe", departamento: "Huila",
+      altura: Number(v("altura")) || null, areaHa: Number(v("area")) || null },
+    lote: { kg: Number(v("kg")), variedades: v("variedad"), proceso: vals("proceso"), fermentacion: vals("fermentacion"), secado: vals("secado"),
+      otro: $("#otroCk").checked ? v("otroTxt") : "", beneficio: v("beneficio") },
+    historia: v("historia"),
+    declaraciones: [1,2,3,4,5,6].map(n => vals("decl").includes(String(n))),
+    firmas: { productor: pads.sigP.png(), funcionario: pads.sigF.png(), funcionarioNombre: v("fNombre"), funcionarioCargo: v("fCargo"), fechaRecepcion: v("fecha") }
+  };
+  try {
+    await Promise.race([
+      setDoc(doc(fdb, "inscripciones", rad), { ...reg, creadoServidor: serverTimestamp() }),
+      new Promise((_, rej) => setTimeout(() => rej({ code: "timeout" }), 20000))
+    ]);
+    pendingRad = null;
+    $("#radNum").textContent = rad;
+    $("#doneTxt").textContent = `${reg.productor.nombre} · ${reg.productor.finca} (${reg.productor.vereda}) · ${reg.lote.kg} kg de ${reg.lote.variedades}. Guarde este número para cualquier consulta con el comité.`;
+    $("#viewForm").hidden = true; $("#viewDone").hidden = false; $("#bar").hidden = true; $("#steps").hidden = true; window.scrollTo({top:0});
+  } catch (err) {
+    const c = err && err.code;
+    $("#formErr").textContent = c === "permission-denied" ? "Firebase rechazó la inscripción: algún dato no cumple las reglas. Revise los campos y vuelva a intentar."
+      : c === "timeout" ? "La señal está débil y el envío no se ha confirmado. No cierre esta página y vuelva a tocar Enviar en un momento."
+      : "No se pudo enviar por un problema de conexión. Revise la señal e inténtelo de nuevo; sus datos siguen en el formulario.";
+    $("#formErr").hidden = false; $("#formErr").scrollIntoView({block:"center"});
+  } finally { btn.disabled = false; btn.innerHTML = 'Enviar inscripción <span aria-hidden="true">→</span>'; }
+});
+
+function resetForm(){
+  $("#f").reset(); pads.sigP.clear(); pads.sigF.clear(); $("#otroTxt").hidden = true;
+  $("#fecha").value = today(); $("#municipio").value = "Guadalupe, Huila";
+  $$(".bad").forEach(el => el.classList.remove("bad")); mirror(); progress();
+}
+function show(tab){
+  $("#tabForm").setAttribute("aria-selected", tab === "form"); $("#tabList").setAttribute("aria-selected", tab === "list");
+  const isForm = tab === "form";
+  const logged = !!auth.currentUser;
+  $("#viewList").hidden = isForm || !logged; $("#viewLogin").hidden = isForm || logged;
+  $("#viewForm").hidden = !isForm; $("#viewDone").hidden = true;
+  $("#bar").hidden = !isForm; $("#steps").hidden = !isForm;
+  history.replaceState(null, "", isForm ? location.pathname : "#comite");
+}
+$("#newBtn").addEventListener("click", () => { resetForm(); show("form"); window.scrollTo({top:0}); });
+$("#tabForm").addEventListener("click", () => show("form"));
+$("#tabList").addEventListener("click", () => show("list"));
+
+// Panel del comité
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtD = iso => { if (!iso) return ""; const d = new Date(iso); return d.toLocaleDateString("es-CO",{day:"2-digit",month:"short"}) + " · " + d.toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}); };
+function render(){
+  const q = $("#q").value.trim().toLowerCase();
+  const list = all.filter(r => !q || JSON.stringify([r.radicado, r.productor, r.lote?.variedades]).toLowerCase().includes(q));
+  const kg = all.reduce((s,r) => s + (Number(r.lote?.kg)||0), 0);
+  const veredas = new Set(all.map(r => (r.productor?.vereda||"").trim().toLowerCase()).filter(Boolean));
+  $("#stN").textContent = all.length; $("#stKg").textContent = kg.toLocaleString("es-CO"); $("#stV").textContent = veredas.size;
+  $("#tabCount").textContent = all.length ? `(${all.length})` : "";
+  if (!list.length){ $("#rows").innerHTML = `<tr><td colspan="8" class="empty">${all.length ? "Ninguna inscripción coincide con la búsqueda." : "Aún no hay inscripciones."}</td></tr>`; return; }
+  $("#rows").innerHTML = list.map(r => `<tr data-id="${esc(r.radicado)}">
+    <td class="code">${esc(r.radicado)}</td>
+    <td><b style="font-weight:700">${esc(r.productor?.nombre)}</b><div class="hint">C.C. ${esc(r.productor?.cedula)}</div></td>
+    <td>${esc(r.productor?.finca)}<div class="hint">${esc(r.productor?.vereda)}</div></td>
+    <td>${esc(r.lote?.variedades)}</td>
+    <td>${[...(r.lote?.proceso||[]), ...(r.lote?.otro ? [r.lote.otro] : [])].map(p => `<span class="pill">${esc(p)}</span>`).join("")}</td>
+    <td class="num">${esc(r.lote?.kg)}</td>
+    <td class="num">${r.productor?.altura ? esc(r.productor.altura) + " m" : "—"}</td>
+    <td style="white-space:nowrap" class="hint">${fmtD(r.creado)}</td></tr>`).join("");
+}
+$("#q").addEventListener("input", render);
+$("#rows").addEventListener("click", e => { const tr = e.target.closest("tr[data-id]"); if (tr) openDetail(tr.dataset.id); });
+
+function openDetail(id){
+  const r = all.find(x => x.radicado === id); if (!r) return;
+  const p = r.productor || {}, l = r.lote || {}, f = r.firmas || {};
+  const row = (k,val) => `<dt>${k}</dt><dd>${esc(val) || "—"}</dd>`;
+  $("#dRad").textContent = r.radicado; $("#dTitle").textContent = p.nombre || "";
+  $("#dBody").innerHTML = `
+    <h3>1 · Productor</h3><dl class="dl">${row("Cédula",p.cedula)}${row("Celular",p.celular)}${row("Finca",p.finca)}${row("Código SICA",p.sica)}${row("Vereda",p.vereda)}${row("Municipio",(p.municipio||"")+", "+(p.departamento||""))}${row("Altura",p.altura?p.altura+" m s. n. m.":"")}${row("Área en café",p.areaHa?p.areaHa+" ha":"")}</dl>
+    <h3>2 · Lote</h3><dl class="dl">${row("Tamaño",l.kg+" kg")}${row("Variedad(es)",l.variedades)}${row("Proceso",(l.proceso||[]).join(", "))}${row("Fermentación",(l.fermentacion||[]).join(", "))}${row("Secado",(l.secado||[]).join(", "))}${row("Otro",l.otro)}</dl>
+    <div><div class="lbl" style="margin-bottom:4px">Proceso de beneficio</div><p>${esc(l.beneficio)}</p></div>
+    <h3>3 · Historia</h3><p>${esc(r.historia) || "—"}</p>
+    <h3>4 · Declaraciones</h3><p>${(r.declaraciones||[]).filter(Boolean).length} de 6 aceptadas</p>
+    <h3>5 · Firmas</h3>
+    <dl class="dl">${row("Fecha de recepción",f.fechaRecepcion)}${row("Funcionario",f.funcionarioNombre)}${row("Cargo",f.funcionarioCargo)}</dl>
+    <div style="display:flex;flex-wrap:wrap;gap:16px">
+      ${f.productor ? `<div><div class="hint">Productor</div><img class="sigimg" alt="Firma del productor" src="${esc(f.productor)}"></div>` : ""}
+      ${f.funcionario ? `<div><div class="hint">Funcionario</div><img class="sigimg" alt="Firma del funcionario" src="${esc(f.funcionario)}"></div>` : ""}
+    </div>`;
+  $("#dlg").showModal();
+}
+$("#dClose").addEventListener("click", () => $("#dlg").close());
+
+function csv(){
+  const head = ["Radicado","Fecha registro","Nombre","Cédula","Celular","Finca","Código SICA","Vereda","Municipio","Departamento","Altura (msnm)","Área café (ha)","Lote (kg)","Variedades","Proceso","Fermentación","Secado","Otro","Proceso de beneficio","Historia","Declaraciones aceptadas","Fecha recepción","Funcionario","Cargo"];
+  const q = val => `"${String(val ?? "").replace(/"/g,'""')}"`;
+  const lines = all.map(r => { const p=r.productor||{}, l=r.lote||{}, f=r.firmas||{}; return [r.radicado, fmtD(r.creado), p.nombre, p.cedula, p.celular, p.finca, p.sica, p.vereda, p.municipio, p.departamento, p.altura, p.areaHa, l.kg, l.variedades, (l.proceso||[]).join(" / "), (l.fermentacion||[]).join(" / "), (l.secado||[]).join(" / "), l.otro, l.beneficio, r.historia, (r.declaraciones||[]).filter(Boolean).length, f.fechaRecepcion, f.funcionarioNombre, f.funcionarioCargo].map(q).join(";"); });
+  return "\uFEFF" + [head.map(q).join(";"), ...lines].join("\r\n");
+}
+$("#csvBtn").addEventListener("click", () => {
+  const blob = new Blob([csv()], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = `inscripciones-microlotes-${today()}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+});
+
+$("#loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("#loginErr").hidden = true;
+  const b = $("#loginBtn"); b.disabled = true; b.textContent = "Ingresando…";
+  try { await signInWithEmailAndPassword(auth, v("lEmail"), $("#lPass").value); $("#lPass").value = ""; }
+  catch (err) {
+    const c = (err && err.code) || "";
+    $("#loginErr").textContent = /invalid|wrong|user-not-found/.test(c) ? "Correo o contraseña incorrectos."
+      : c.includes("too-many") ? "Demasiados intentos. Espere unos minutos e intente de nuevo."
+      : "No se pudo ingresar. Revise la conexión.";
+    $("#loginErr").hidden = false;
+  } finally { b.disabled = false; b.textContent = "Ingresar"; }
+});
+$("#logoutBtn").addEventListener("click", () => signOut(auth));
+
+onAuthStateChanged(auth, u => {
+  if (unsub){ unsub(); unsub = null; }
+  if (u){
+    $("#whoTxt").textContent = `Sesión: ${u.email}`;
+    unsub = onSnapshot(query(collection(fdb, "inscripciones"), orderBy("creado","desc")),
+      s => { all = s.docs.map(d => d.data()); render(); },
+      err => { $("#rows").innerHTML = `<tr><td colspan="8" class="empty">${err.code === "permission-denied" ? "Esta cuenta no está autorizada. Agregue su correo en las reglas de Firestore." : "No se pudieron cargar las inscripciones. Revise la conexión."}</td></tr>`; });
+  } else { all = []; render(); }
+  if ($("#tabList").getAttribute("aria-selected") === "true") show("list");
+});
+if (location.hash === "#comite") show("list");
+</script>
+</body>
+</html>
