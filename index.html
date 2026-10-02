@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Formulario de inscripción al Concurso de Microlotes de la VII Feria de Café Especial y Agroempresarial de Guadalupe, Huila.">
 <title>Inscripción Microlotes Guadalupe</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23173527'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='%23d4a24c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap">
@@ -417,7 +418,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const fdb = getFirestore(app);
+const fdb = getFirestore(app, "default");   // tu base de datos se llama "default"
 const auth = getAuth(app);
 
 const $ = s => document.querySelector(s);
@@ -554,10 +555,11 @@ $("#f").addEventListener("submit", async e => {
     $("#doneTxt").textContent = `${reg.productor.nombre} · ${reg.productor.finca} (${reg.productor.vereda}) · ${reg.lote.kg} kg de ${reg.lote.variedades}. Guarde este número para cualquier consulta con el comité.`;
     $("#viewForm").hidden = true; $("#viewDone").hidden = false; $("#bar").hidden = true; $("#steps").hidden = true; window.scrollTo({top:0});
   } catch (err) {
+    console.error(err);
     const c = err && err.code;
     $("#formErr").textContent = c === "permission-denied" ? "Firebase rechazó la inscripción: algún dato no cumple las reglas. Revise los campos y vuelva a intentar."
       : c === "timeout" ? "La señal está débil y el envío no se ha confirmado. No cierre esta página y vuelva a tocar Enviar en un momento."
-      : "No se pudo enviar por un problema de conexión. Revise la señal e inténtelo de nuevo; sus datos siguen en el formulario.";
+      : "No se pudo enviar (" + (c || "error") + "). Revise la señal e inténtelo de nuevo; sus datos siguen en el formulario.";
     $("#formErr").hidden = false; $("#formErr").scrollIntoView({block:"center"});
   } finally { btn.disabled = false; btn.innerHTML = 'Enviar inscripción <span aria-hidden="true">→</span>'; }
 });
@@ -648,6 +650,7 @@ $("#loginForm").addEventListener("submit", async e => {
     const c = (err && err.code) || "";
     $("#loginErr").textContent = /invalid|wrong|user-not-found/.test(c) ? "Correo o contraseña incorrectos."
       : c.includes("too-many") ? "Demasiados intentos. Espere unos minutos e intente de nuevo."
+      : c.includes("operation-not-allowed") ? "Falta activar Correo/contraseña en Firebase Authentication."
       : "No se pudo ingresar. Revise la conexión.";
     $("#loginErr").hidden = false;
   } finally { b.disabled = false; b.textContent = "Ingresar"; }
