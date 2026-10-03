@@ -233,6 +233,12 @@ img{max-width:100%}
 .who-cell{display:flex;align-items:center;gap:10px}
 .mini-av{width:36px;height:36px;border-radius:50%;object-fit:cover;flex:none;background:var(--sunk);border:1px solid var(--line)}
 .d-portrait{width:150px;height:150px;border-radius:50%;object-fit:cover;border:3px solid var(--leaf)}
+.banner.edit{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:var(--leaf-soft);border:1.5px solid var(--leaf)}
+.banner.edit b{font-variant-numeric:tabular-nums}
+.banner.okmsg{background:var(--ok-soft);border:1px solid var(--ok);margin-bottom:14px}
+.sig-old{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;border-radius:12px}
+.dlg-actions{display:flex;gap:8px;flex-wrap:wrap}
+.edited{display:inline-block;font-size:11px;font-weight:700;color:var(--leaf);background:var(--leaf-soft);padding:1px 7px;border-radius:999px;margin-top:3px}
 .login{max-width:420px;margin:8px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px 22px;display:grid;gap:14px;box-shadow:var(--shadow)}
 .login h2{font-family:var(--display);font-weight:400;font-size:26px;margin:0}
 .who{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:13px;color:var(--muted)}
@@ -280,6 +286,7 @@ img{max-width:100%}
 
   <section id="viewForm">
   <form id="f" novalidate>
+    <div id="editBar" class="banner edit" hidden><span>Editando la inscripción <b id="editRad"></b>. Corrija lo necesario y toque <b>Guardar cambios</b>.</span><button type="button" class="ghost" id="editCancel">Cancelar edición</button></div>
     <fieldset id="s1">
       <legend><div class="sec-h"><span class="sec-n">1</span><div><div class="sec-t">Datos del productor</div><div class="sec-d">Quién participa y dónde está la finca.</div></div></div></legend>
       <div class="sec-b grid">
@@ -370,7 +377,7 @@ img{max-width:100%}
       <div class="sec-b sigs">
         <div class="sigbox f" id="g-firma">
           <h3><span>Productor / participante <span class="req">*</span></span><button type="button" class="mini" data-clear="sigP">Borrar</button></h3>
-          <div class="pad"><canvas id="sigP"></canvas><div class="ln"></div><span class="x">×</span><span class="ph">Firme aquí</span></div>
+          <div class="pad"><img class="sig-old" alt="Firma guardada" hidden><canvas id="sigP"></canvas><div class="ln"></div><span class="x">×</span><span class="ph">Firme aquí</span></div>
           <span class="err">Falta la firma del productor.</span>
           <div class="f"><label for="pNombre">Nombre</label><input type="text" id="pNombre" readonly placeholder="Se completa solo"></div>
           <div class="grid">
@@ -380,7 +387,7 @@ img{max-width:100%}
         </div>
         <div class="sigbox">
           <h3><span>Funcionario quien recibe</span><button type="button" class="mini" data-clear="sigF">Borrar</button></h3>
-          <div class="pad"><canvas id="sigF"></canvas><div class="ln"></div><span class="x">×</span><span class="ph">Firma del funcionario</span></div>
+          <div class="pad"><img class="sig-old" alt="Firma guardada" hidden><canvas id="sigF"></canvas><div class="ln"></div><span class="x">×</span><span class="ph">Firma del funcionario</span></div>
           <div class="f"><label for="fNombre">Nombre</label><input type="text" id="fNombre"></div>
           <div class="f"><label for="fCargo">Cargo</label><input type="text" id="fCargo"></div>
         </div>
@@ -414,6 +421,7 @@ img{max-width:100%}
   </section>
 
   <section id="viewList" hidden>
+    <div id="listMsg" class="banner okmsg" hidden></div>
     <div class="who"><span id="whoTxt"></span><button class="ghost" type="button" id="logoutBtn">Cerrar sesión</button></div>
     <div class="stats">
       <div class="stat"><span class="eyebrow">Lotes inscritos</span><b id="stN">0</b></div>
@@ -442,7 +450,7 @@ img{max-width:100%}
   </div>
 </div>
 
-<dialog id="dlg"><div class="dlg-h"><div><div class="eyebrow" id="dRad"></div><h2 id="dTitle"></h2></div><button class="btn sec" id="dClose" type="button" style="padding:8px 16px">Cerrar</button></div><div class="dlg-b" id="dBody"></div></dialog>
+<dialog id="dlg"><div class="dlg-h"><div><div class="eyebrow" id="dRad"></div><h2 id="dTitle"></h2></div><div class="dlg-actions"><button class="btn pri" id="dEdit" type="button" style="padding:8px 18px">Editar</button><button class="btn sec" id="dClose" type="button" style="padding:8px 16px">Cerrar</button></div></div><div class="dlg-b" id="dBody"></div></dialog>
 
 <script type="module">
 // ============================================================
@@ -491,6 +499,8 @@ function setupPad(id){
   const cv = document.getElementById(id), ctx = cv.getContext("2d");
   const st = { drawn:false, down:false };
   const ph = cv.parentElement.querySelector(".ph");
+  const old = cv.parentElement.querySelector(".sig-old");
+  st.existing = "";
   function size(){
     const r = cv.getBoundingClientRect(); if (!r.width) return;
     const old = st.drawn ? cv.toDataURL() : null;
@@ -500,12 +510,14 @@ function setupPad(id){
     if (old){ const im = new Image(); im.onload = () => ctx.drawImage(im,0,0,cv.width,cv.height); im.src = old; }
   }
   const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX-r.left)*2,(e.clientY-r.top)*2]; };
-  cv.addEventListener("pointerdown", e => { st.down = true; cv.setPointerCapture(e.pointerId); const [x,y]=pos(e); ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+0.1,y+0.1); ctx.stroke(); if (!st.drawn){ st.drawn = true; ph.hidden = true; progress(); } });
+  cv.addEventListener("pointerdown", e => { if (st.existing){ st.existing = ""; old.hidden = true; old.removeAttribute("src"); } st.down = true; cv.setPointerCapture(e.pointerId); const [x,y]=pos(e); ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+0.1,y+0.1); ctx.stroke(); if (!st.drawn){ st.drawn = true; ph.hidden = true; progress(); } });
   cv.addEventListener("pointermove", e => { if(!st.down) return; const [x,y]=pos(e); ctx.lineTo(x,y); ctx.stroke(); });
   ["pointerup","pointercancel","pointerleave"].forEach(t => cv.addEventListener(t, () => { st.down = false; }));
   new ResizeObserver(size).observe(cv); size();
-  st.clear = () => { ctx.clearRect(0,0,cv.width,cv.height); st.drawn = false; ph.hidden = false; progress(); };
+  st.clear = () => { ctx.clearRect(0,0,cv.width,cv.height); st.drawn = false; ph.hidden = false; st.existing = ""; old.hidden = true; old.removeAttribute("src"); progress(); };
+  st.load = src => { st.clear(); if (String(src || "").startsWith("data:image/")){ st.existing = src; old.src = src; old.hidden = false; st.drawn = true; ph.hidden = true; } progress(); };
   st.png = () => {
+    if (st.existing) return st.existing;
     if (!st.drawn) return "";
     const w = 480, h = Math.round(480 * cv.height / cv.width);
     const t = document.createElement("canvas"); t.width = w; t.height = h;
@@ -621,8 +633,8 @@ $("#f").addEventListener("submit", async e => {
   const bad = check();
   if (bad){ bad.scrollIntoView({behavior:"smooth", block:"center"}); const i = bad.querySelector("input:not([readonly]):not([type=checkbox]),textarea"); if (i) i.focus({preventScroll:true}); return; }
   if (!fdb){ $("#formErr").textContent = "El formulario aún no está conectado a Firebase. Avise al organizador."; $("#formErr").hidden = false; $("#formErr").scrollIntoView({block:"center"}); return; }
-  const btn = $("#submitBtn"); btn.disabled = true; btn.textContent = "Enviando…";
-  const rad = pendingRad || (pendingRad = radicado());
+  const btn = $("#submitBtn"); btn.disabled = true; btn.textContent = editing ? "Guardando…" : "Enviando…";
+  const rad = editing ? editing.radicado : (pendingRad || (pendingRad = radicado()));
   const reg = {
     radicado: rad, creado: new Date().toISOString(),
     productor: { nombre: v("nombre"), cedula: v("cedula").replace(/[.\s]/g,""), celular: v("celular").replace(/\D/g,""),
@@ -635,12 +647,19 @@ $("#f").addEventListener("submit", async e => {
     declaraciones: [1,2,3,4,5,6].map(n => vals("decl").includes(String(n))),
     firmas: { productor: pads.sigP.png(), funcionario: pads.sigF.png(), funcionarioNombre: v("fNombre"), funcionarioCargo: v("fCargo"), fechaRecepcion: v("fecha") }
   };
+  if (editing){ delete reg.radicado; delete reg.creado; reg.editado = new Date().toISOString(); reg.editadoPor = (auth && auth.currentUser && auth.currentUser.email) || ""; }
   const save = () => Promise.race([
-    setDoc(doc(fdb, "inscripciones", rad), { ...reg, creadoServidor: serverTimestamp() }),
+    editing ? setDoc(doc(fdb, "inscripciones", rad), reg, { merge: true })
+            : setDoc(doc(fdb, "inscripciones", rad), { ...reg, creadoServidor: serverTimestamp() }),
     new Promise((_, rej) => setTimeout(() => rej({ code: "timeout" }), 20000))
   ]);
   try {
     await save();
+    if (editing){
+      exitEdit(); resetForm(); show("list"); window.scrollTo({top:0});
+      flash(`Cambios guardados en la inscripción ${rad}.`);
+      return;
+    }
     pendingRad = null;
     $("#radNum").textContent = rad;
     $("#doneTxt").textContent = `${reg.productor.nombre} · ${reg.productor.finca} (${reg.productor.vereda}) · ${reg.lote.kg} kg de ${reg.lote.variedades}. Guarde este número para cualquier consulta con el comité.`;
@@ -648,13 +667,48 @@ $("#f").addEventListener("submit", async e => {
   } catch (err) {
     console.error(err);
     const c = err && err.code;
-    $("#formErr").textContent = c === "permission-denied" ? "Firebase rechazó la inscripción: algún dato no cumple las reglas del formulario. Revise los campos y vuelva a intentar."
+    $("#formErr").textContent = (editing && c === "permission-denied") ? "Su cuenta no tiene permiso para editar. Inicie sesión con un correo del comité."
+      : c === "permission-denied" ? "Firebase rechazó la inscripción: algún dato no cumple las reglas del formulario. Revise los campos y vuelva a intentar."
       : c === "timeout" ? "La señal está débil y el envío no se ha confirmado. No cierre esta página: vuelva a tocar Enviar en un momento (no se duplicará)."
       : "No se pudo enviar (" + (c || "error") + "). Revise la señal e inténtelo de nuevo; sus datos siguen en el formulario.";
     $("#formErr").hidden = false; $("#formErr").scrollIntoView({block:"center"});
-  } finally { btn.disabled = false; btn.innerHTML = 'Enviar inscripción <span aria-hidden="true">→</span>'; }
+  } finally { btn.disabled = false; setSubmitLabel(); }
 });
 let pendingRad = null;
+let editing = null;
+function setSubmitLabel(){ $("#submitBtn").innerHTML = editing ? 'Guardar cambios <span aria-hidden="true">✓</span>' : 'Enviar inscripción <span aria-hidden="true">→</span>'; }
+function flash(msg){ const m = $("#listMsg"); m.textContent = msg; m.hidden = false; clearTimeout(flash.t); flash.t = setTimeout(() => { m.hidden = true; }, 5000); }
+function fillForm(r){
+  resetForm();
+  const p = r.productor || {}, l = r.lote || {}, f = r.firmas || {};
+  const set = (id, val) => { $("#" + id).value = val ?? ""; };
+  set("nombre", p.nombre); set("cedula", p.cedula); set("celular", p.celular); set("finca", p.finca);
+  set("sica", p.sica); set("vereda", p.vereda); set("altura", p.altura); set("area", p.areaHa);
+  set("kg", l.kg); set("variedad", l.variedades); set("beneficio", l.beneficio); set("historia", r.historia);
+  ["proceso", "fermentacion", "secado"].forEach(n => $$(`[name=${n}]`).forEach(c => { c.checked = (l[n] || []).includes(c.value); }));
+  $("#otroCk").checked = !!l.otro; $("#otroTxt").hidden = !l.otro; set("otroTxt", l.otro);
+  $$("[name=decl]").forEach((c, i) => { c.checked = !!(r.declaraciones || [])[i]; });
+  fotoP = String(r.fotoProductor || "").startsWith("data:image/") ? r.fotoProductor : ""; renderFoto();
+  pads.sigP.load(f.productor); pads.sigF.load(f.funcionario);
+  set("fNombre", f.funcionarioNombre); set("fCargo", f.funcionarioCargo); set("fecha", f.fechaRecepcion);
+  mirror(); progress();
+}
+function startEdit(r){
+  editing = r;
+  fillForm(r);
+  $("#editRad").textContent = r.radicado; $("#editBar").hidden = false;
+  setSubmitLabel();
+  show("form");
+  $("#tabForm").textContent = "Editando " + r.radicado;
+  window.scrollTo({top:0, behavior:"instant"});
+}
+function exitEdit(){
+  editing = null;
+  $("#editBar").hidden = true; $("#formErr").hidden = true;
+  $("#tabForm").textContent = "Nueva inscripción";
+  setSubmitLabel();
+}
+$("#editCancel").addEventListener("click", () => { exitEdit(); resetForm(); show("list"); });
 
 function resetForm(){
   $("#f").reset(); pads.sigP.clear(); pads.sigF.clear(); fotoP = ""; renderFoto(); $("#otroTxt").hidden = true;
@@ -671,8 +725,8 @@ function show(tab){
   history.replaceState(null, "", isForm ? location.pathname : "#comite");
 }
 $("#newBtn").addEventListener("click", () => { resetForm(); show("form"); window.scrollTo({top:0}); });
-$("#tabForm").addEventListener("click", () => show("form"));
-$("#tabList").addEventListener("click", () => show("list"));
+$("#tabForm").addEventListener("click", () => { if (!editing) show("form"); });
+$("#tabList").addEventListener("click", () => { if (editing){ exitEdit(); resetForm(); } show("list"); });
 
 // listado
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -693,13 +747,15 @@ function render(){
     <td>${[...(r.lote?.proceso||[]), ...(r.lote?.otro ? [r.lote.otro] : [])].map(p => `<span class="pill">${esc(p)}</span>`).join("")}</td>
     <td class="num">${esc(r.lote?.kg)}</td>
     <td class="num">${r.productor?.altura ? esc(r.productor.altura) + " m" : "—"}</td>
-    <td style="white-space:nowrap" class="hint">${fmtD(r.creado)}</td></tr>`).join("");
+    <td style="white-space:nowrap" class="hint">${fmtD(r.creado)}${r.editado ? `<br><span class="edited" title="${esc(r.editadoPor)}">Editado ${fmtD(r.editado)}</span>` : ""}</td></tr>`).join("");
 }
 $("#q").addEventListener("input", render);
 $("#rows").addEventListener("click", e => { const tr = e.target.closest("tr[data-id]"); if (tr) openDetail(tr.dataset.id); });
 
+let currentId = null;
 function openDetail(id){
   const r = all.find(x => x.radicado === id); if (!r) return;
+  currentId = id;
   const p = r.productor || {}, l = r.lote || {}, f = r.firmas || {};
   const row = (k,val) => `<dt>${k}</dt><dd>${esc(val) || "—"}</dd>`;
   $("#dRad").textContent = r.radicado; $("#dTitle").textContent = p.nombre || "";
@@ -719,11 +775,15 @@ function openDetail(id){
   $("#dlg").showModal();
 }
 $("#dClose").addEventListener("click", () => $("#dlg").close());
+$("#dEdit").addEventListener("click", () => {
+  const r = all.find(x => x.radicado === currentId); if (!r) return;
+  $("#dlg").close(); startEdit(r);
+});
 
 function csv(){
-  const head = ["Radicado","Fecha registro","Nombre","Cédula","Celular","Finca","Código SICA","Vereda","Municipio","Departamento","Altura (msnm)","Área café (ha)","Lote (kg)","Variedades","Proceso","Fermentación","Secado","Otro","Proceso de beneficio","Historia","Foto del caficultor","Declaraciones aceptadas","Fecha recepción","Funcionario","Cargo"];
+  const head = ["Radicado","Fecha registro","Nombre","Cédula","Celular","Finca","Código SICA","Vereda","Municipio","Departamento","Altura (msnm)","Área café (ha)","Lote (kg)","Variedades","Proceso","Fermentación","Secado","Otro","Proceso de beneficio","Historia","Foto del caficultor","Declaraciones aceptadas","Fecha recepción","Funcionario","Cargo","Editado","Editado por"];
   const q = val => `"${String(val ?? "").replace(/"/g,'""')}"`;
-  const lines = all.map(r => { const p=r.productor||{}, l=r.lote||{}, f=r.firmas||{}; return [r.radicado, fmtD(r.creado), p.nombre, p.cedula, p.celular, p.finca, p.sica, p.vereda, p.municipio, p.departamento, p.altura, p.areaHa, l.kg, l.variedades, (l.proceso||[]).join(" / "), (l.fermentacion||[]).join(" / "), (l.secado||[]).join(" / "), l.otro, l.beneficio, r.historia, r.fotoProductor ? "Sí" : "No", (r.declaraciones||[]).filter(Boolean).length, f.fechaRecepcion, f.funcionarioNombre, f.funcionarioCargo].map(q).join(";"); });
+  const lines = all.map(r => { const p=r.productor||{}, l=r.lote||{}, f=r.firmas||{}; return [r.radicado, fmtD(r.creado), p.nombre, p.cedula, p.celular, p.finca, p.sica, p.vereda, p.municipio, p.departamento, p.altura, p.areaHa, l.kg, l.variedades, (l.proceso||[]).join(" / "), (l.fermentacion||[]).join(" / "), (l.secado||[]).join(" / "), l.otro, l.beneficio, r.historia, r.fotoProductor ? "Sí" : "No", (r.declaraciones||[]).filter(Boolean).length, f.fechaRecepcion, f.funcionarioNombre, f.funcionarioCargo, r.editado ? fmtD(r.editado) : "", r.editadoPor].map(q).join(";"); });
   return "﻿" + [head.map(q).join(";"), ...lines].join("\r\n");
 }
 
